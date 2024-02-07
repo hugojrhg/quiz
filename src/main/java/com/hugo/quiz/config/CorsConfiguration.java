@@ -11,9 +11,13 @@ public class CorsConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry){
         registry.addMapping("/user/**")
                 .allowedOrigins("http://127.0.0.1:5500")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedOrigins("https://quiz-back-kihe.onrender.com")
                 .allowedMethods("GET", "POST", "PUT", "DELETE");
         registry.addMapping("/quiz/**")
                 .allowedOrigins("http://127.0.0.1:5500")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedOrigins("https://quiz-back-kihe.onrender.com")
                 .allowedMethods("GET", "POST", "PUT", "DELETE");
     }
 

@@ -16,10 +16,10 @@ public class CorsConfiguration implements WebMvcConfigurer {
                 .allowedOrigins("http://127.0.0.1:5500")
                 .allowedMethods("GET", "POST", "PUT", "DELETE");
         registry.addMapping("/user/**")
-                .allowedOrigins("https://quizjmv.netlify.app")
+                .allowedOrigins("https://deploy-netlify--quizjmv.netlify.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE");
         registry.addMapping("/quiz/**")
-                .allowedOrigins("https://quizjmv.netlify.app")
+                .allowedOrigins("https://deploy-netlify--quizjmv.netlify.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE");
     }
 

@@ -1,6 +1,5 @@
 package com.hugo.quiz.controller;
 
-import com.hugo.quiz.dto.PlayerDTO;
 import com.hugo.quiz.dto.QuizDTO;
 import com.hugo.quiz.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +43,9 @@ public class QuizController {
         return new ResponseEntity<>(quizService.updateQuiz(quizDTO, id), HttpStatus.OK);
     }
 
-    @PutMapping("/insert-player/{id}")
-    public ResponseEntity<QuizDTO> insertPlayerInQuiz(@RequestBody PlayerDTO playerToAdd, @PathVariable Long id) throws Exception {
-        return new ResponseEntity<>(quizService.insertPlayerInQuiz(playerToAdd, id), HttpStatus.OK);
-    }
+//    @PutMapping("/insert-player/{id}")
+//    public ResponseEntity<QuizDTO> insertPlayerInQuiz(@RequestBody PlayerDTO playerToAdd, @PathVariable Long id) throws Exception {
+//        return new ResponseEntity<>(quizService.insertPlayerInQuiz(playerToAdd, id), HttpStatus.OK);
+//    }
 
 }

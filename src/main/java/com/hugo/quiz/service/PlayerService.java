@@ -37,7 +37,7 @@ public class PlayerService {
         return playerMapper.toListDTO(playerRepository.findAll());
     }
 
-    public PlayerDTO saveplayer(PlayerDTO playerDTO) throws Exception {
+    public PlayerDTO saveplayer(PlayerDTO playerDTO) {
         return playerMapper.toDTO(playerRepository.save(playerMapper.toEntity(playerDTO)));
     }
 
@@ -45,7 +45,7 @@ public class PlayerService {
         playerRepository.deleteById(id);
     }
 
-    public PlayerDTO updateplayer(PlayerDTO newPlayer, Long id) throws Exception {
+    public PlayerDTO updateplayer(PlayerDTO newPlayer, Long id) {
         Player oldplayer = playerMapper.toEntity(getPlayerById(id));
         oldplayer.setNickName(newPlayer.getNickName());
         oldplayer.setUser(userMapper.toEntity(newPlayer.getUserDTO()));

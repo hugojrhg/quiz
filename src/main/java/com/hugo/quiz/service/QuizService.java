@@ -3,8 +3,8 @@ package com.hugo.quiz.service;
 import com.hugo.quiz.builder.PlayerMapper;
 import com.hugo.quiz.builder.QuestionMapper;
 import com.hugo.quiz.builder.QuizMapper;
-import com.hugo.quiz.dto.PlayerDTO;
 import com.hugo.quiz.dto.QuizDTO;
+import com.hugo.quiz.exception.quiz.QuizNotFoundException;
 import com.hugo.quiz.model.Quiz;
 import com.hugo.quiz.repository.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class QuizService {
     QuestionMapper questionMapper;
 
     public QuizDTO getQuizById(Long id) {
-        return quizMapper.toDTO(quizRepository.findById(id).orElseThrow());
+        return quizMapper.toDTO(quizRepository.findById(id).orElseThrow(QuizNotFoundException::new));
     }
 
     public List<QuizDTO> getAllQuizzes() {
@@ -47,20 +47,12 @@ public class QuizService {
         quizRepository.deleteById(id);
     }
 
-    public QuizDTO updateQuiz(QuizDTO newQuiz, Long id) throws Exception {
+    public QuizDTO updateQuiz(QuizDTO newQuiz, Long id) {
         Quiz quiz = quizMapper.toEntity(getQuizById(id));
         quiz.setQuestions(questionMapper.toList(newQuiz.getQuestions()));
         quiz.setName(newQuiz.getName());
         quiz.setTheme(newQuiz.getTheme());
         quiz.setPlayers(playerMapper.toList(newQuiz.getPlayers()));
-
-        Quiz savedQuiz = quizRepository.save(quiz);
-        return quizMapper.toDTO(savedQuiz);
-    }
-
-    public QuizDTO insertPlayerInQuiz(PlayerDTO playerToAdd, Long id) throws Exception {
-        Quiz quiz = quizMapper.toEntity(getQuizById(id));
-        quiz.getPlayers().add(playerMapper.toEntity(playerToAdd));
 
         Quiz savedQuiz = quizRepository.save(quiz);
         return quizMapper.toDTO(savedQuiz);

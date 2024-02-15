@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class QuestionDTO {
@@ -15,12 +16,12 @@ public class QuestionDTO {
     @JsonProperty("question")
     private String question;
     @JsonProperty("alternativeList")
-    private ArrayList<AlternativeDTO> alternativeList = new ArrayList<>();
+    private List<AlternativeDTO> alternativeList = new ArrayList<>();
 
     public QuestionDTO() {
     }
 
-    public QuestionDTO(Long id, String theme, String question, ArrayList<AlternativeDTO> alternativeList) {
+    public QuestionDTO(Long id, String theme, String question, List<AlternativeDTO> alternativeList) {
         this.id = id;
         this.theme = theme;
         this.question = question;
@@ -51,11 +52,11 @@ public class QuestionDTO {
         this.question = question;
     }
 
-    public ArrayList<AlternativeDTO> getAlternativeList() {
+    public List<AlternativeDTO> getAlternativeList() {
         return alternativeList;
     }
 
-    public void setAlternativeList(ArrayList<AlternativeDTO> alternativeList) {
+    public void setAlternativeList(List<AlternativeDTO> alternativeList) {
         this.alternativeList = alternativeList;
     }
 

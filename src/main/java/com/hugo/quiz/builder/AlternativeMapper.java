@@ -5,9 +5,7 @@ import com.hugo.quiz.model.Alternative;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class AlternativeMapper {
@@ -27,16 +25,16 @@ public class AlternativeMapper {
     }
 
 
-    public ArrayList<AlternativeDTO> toListDTO(List<Alternative> modelList) {
+    public List<AlternativeDTO> toListDTO(List<Alternative> modelList) {
         return modelList.stream()
                 .map(this::toDTO)
-                .collect(Collectors.toCollection(ArrayList::new));
+                .toList();
     }
 
     public List<Alternative> toList(List<AlternativeDTO> dtosList) {
         return dtosList.stream()
                 .map(this::toEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

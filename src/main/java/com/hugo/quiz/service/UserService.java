@@ -2,6 +2,8 @@ package com.hugo.quiz.service;
 
 import com.hugo.quiz.builder.UserMapper;
 import com.hugo.quiz.dto.UserDTO;
+import com.hugo.quiz.exception.user.UserAlreadyExistsException;
+import com.hugo.quiz.exception.user.UserNotFoundException;
 import com.hugo.quiz.model.User;
 import com.hugo.quiz.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +25,17 @@ public class UserService {
     UserMapper userMapper;
 
     public UserDTO getUserById(Long id) {
-        return userMapper.toDTO(userRepository.findById(id).orElseThrow());
+        return userMapper.toDTO(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
     }
 
-    public UserDTO getUserByEmailAndPassword(String email, String password) throws Exception {
-        User user = userRepository.findByEmail(email).orElseThrow();
+    public UserDTO getUserByEmailAndPassword(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("Not exist a user with this Email or Password"));
+
         if (verifyPassword(user.getPassword(), password)){
             return userMapper.toDTO(user);
         }else{
-            throw new Exception("user n encontrado");
+            throw new UserNotFoundException("Not exist a user with this Email or Password");
         }
-
 
     }
 
@@ -42,6 +44,9 @@ public class UserService {
     }
 
     public UserDTO saveUser(UserDTO userDTO) {
+        if (userRepository.existsById(userDTO.getId())){
+            throw new UserAlreadyExistsException();
+        }
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         return userMapper.toDTO(userRepository.save(userMapper.toEntity(userDTO)));
     }
@@ -50,7 +55,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public UserDTO updateUser(UserDTO newUser, Long id) throws Exception {
+    public UserDTO updateUser(UserDTO newUser, Long id) {
         User oldUser = userMapper.toEntity(getUserById(id));
         oldUser.setName(newUser.getName());
         oldUser.setFullName(newUser.getFullName());
@@ -61,7 +66,7 @@ public class UserService {
         return userMapper.toDTO(userRepository.save(oldUser));
     }
 
-    public Boolean verifyPassword(String encodedPassword, String password){
+    public Boolean verifyPassword(String encodedPassword, String password) {
         return passwordEncoder.matches(password, encodedPassword);
     }
 

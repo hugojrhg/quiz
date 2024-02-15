@@ -5,9 +5,7 @@ import com.hugo.quiz.model.Question;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class QuestionMapper {
@@ -26,16 +24,16 @@ public class QuestionMapper {
         return modelMapper.map(dto, Question.class);
     }
 
-    public ArrayList<QuestionDTO> toListDTO(List<Question> modelList) {
-        return new ArrayList<>(modelList.stream()
+    public List<QuestionDTO> toListDTO(List<Question> modelList) {
+        return modelList.stream()
                 .map(this::toDTO)
-                .collect(Collectors.toList()));
+                .toList();
     }
 
-    public ArrayList<Question> toList(List<QuestionDTO> dtosList) {
-        return new ArrayList<>(dtosList.stream()
+    public List<Question> toList(List<QuestionDTO> dtosList) {
+        return dtosList.stream()
                 .map(this::toEntity)
-                .collect(Collectors.toList()));
+                .toList();
     }
 
 }

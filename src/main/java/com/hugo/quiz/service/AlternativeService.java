@@ -2,6 +2,7 @@ package com.hugo.quiz.service;
 
 import com.hugo.quiz.builder.AlternativeMapper;
 import com.hugo.quiz.dto.AlternativeDTO;
+import com.hugo.quiz.exception.alternative.AlternativeNotFoundException;
 import com.hugo.quiz.model.Alternative;
 import com.hugo.quiz.repository.AlternativeRepository;
 import com.hugo.quiz.repository.QuestionRepository;
@@ -26,14 +27,12 @@ public class AlternativeService {
     private QuestionRepository questionRepository;
 
 
-    public List<AlternativeDTO> findAll(){
+    public List<AlternativeDTO> findAll() {
         return alternativeMapper.toListDTO(alternativeRepository.findAll());
     }
 
     public AlternativeDTO findById(Long id) {
-        Alternative alternative = alternativeRepository.findById(id)
-                .orElseThrow(() ->
-                        new NoSuchElementException(msgError("findById")));
+        Alternative alternative = alternativeRepository.findById(id).orElseThrow(AlternativeNotFoundException::new);
         return (alternative != null) ? (alternativeMapper.toDTO(alternative)) : (null);
     }
 
@@ -42,7 +41,7 @@ public class AlternativeService {
             List<Alternative> alternatives = alternativeRepository.findAllById(ids);
             return alternativeMapper.toListDTO(alternatives);
         } catch (DataAccessException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,msgError("findByIds"), e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, msgError("findByIds"), e);
         }
     }
 
@@ -65,7 +64,7 @@ public class AlternativeService {
     }
 
     private String msgError(String method) {
-        return "Ocorreu um erro em AlternativeService ao tentar fazer a operação no método: "  + method;
+        return "Ocorreu um erro em AlternativeService ao tentar fazer a operação no método: " + method;
     }
 
     private String msgQuestionIdNotPresent(String status) {

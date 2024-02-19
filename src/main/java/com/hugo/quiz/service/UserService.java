@@ -2,7 +2,6 @@ package com.hugo.quiz.service;
 
 import com.hugo.quiz.builder.UserMapper;
 import com.hugo.quiz.dto.UserDTO;
-import com.hugo.quiz.exception.user.UserAlreadyExistsException;
 import com.hugo.quiz.exception.user.UserNotFoundException;
 import com.hugo.quiz.model.User;
 import com.hugo.quiz.repository.UserRepository;
@@ -44,9 +43,9 @@ public class UserService {
     }
 
     public UserDTO saveUser(UserDTO userDTO) {
-        if (userRepository.existsById(userDTO.getId())){
-            throw new UserAlreadyExistsException();
-        }
+//        if (userRepository.existsById(userDTO.getId())){
+//            throw new UserAlreadyExistsException();
+//        }
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         return userMapper.toDTO(userRepository.save(userMapper.toEntity(userDTO)));
     }

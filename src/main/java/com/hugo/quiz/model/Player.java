@@ -14,7 +14,6 @@ public class Player {
     @Column(name = "pontuacao")
     private Integer score;
     @OneToOne(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Column(name = "usuario")
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_quiz")

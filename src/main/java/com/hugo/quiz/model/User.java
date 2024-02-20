@@ -9,11 +9,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "nome")
     private String name;
+    @Column(name = "nomeCompleto")
     private String fullName;
+    @Column(name = "idade")
     private Integer age;
-    @Column(unique = true)
+    @Column(name = "email", unique = true)
     private String email;
+    @Column(name = "senha")
     private String password;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "player_id")

@@ -12,7 +12,9 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "tema")
     private String theme;
+    @Column(name = "questao")
     private String question;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Alternative> alternativeList = new ArrayList<>();

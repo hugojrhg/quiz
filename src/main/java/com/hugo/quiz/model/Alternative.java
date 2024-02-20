@@ -9,7 +9,9 @@ public class Alternative {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "alternativa")
     private String alternative;
+    @Column(name = "ehCorreta")
     private Boolean itsCorrect;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_questao")

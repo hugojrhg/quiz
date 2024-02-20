@@ -9,9 +9,12 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "apelido")
     private String nickName;
+    @Column(name = "pontuacao")
     private Integer score;
     @OneToOne(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(name = "usuario")
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_quiz")
